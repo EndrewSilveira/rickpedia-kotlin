@@ -1,0 +1,13 @@
+<resources>
+    <string name="app_name">Rickpedia</string>
+    <string name="hello_blank_fragment">Hello blank fragment</string>
+    <string name="card_origin">Origin : </string>
+    <string name="card_gender">Gender : </string>
+    <string name="search_hint">Character\'s name</string>
+    <string name="home_title">Characters</string>
+    <string name="no_result">No characters found.</string>
+    <string name="species">Species</string>
+    <string name="gender">Gender</string>
+    <string name="origin">Origin</string>
+    <string name="location">Location</string>
+</resources>
