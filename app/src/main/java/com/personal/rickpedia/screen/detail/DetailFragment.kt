@@ -1,12 +1,16 @@
 package com.personal.rickpedia.screen.detail
 
+import android.graphics.Color
 import android.os.Handler
 import android.view.LayoutInflater
+import androidx.core.content.ContextCompat
 import androidx.core.view.isVisible
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.navArgs
 import com.bumptech.glide.Glide
 import com.bumptech.glide.request.RequestOptions.bitmapTransform
+import com.facebook.shimmer.Shimmer
+import com.facebook.shimmer.ShimmerDrawable
 import com.personal.rickpedia.R
 import com.personal.rickpedia.base.BaseFragment
 import com.personal.rickpedia.databinding.FragmentDetailBinding
@@ -14,6 +18,7 @@ import com.personal.rickpedia.domain.character.Character
 import com.personal.rickpedia.screen.home.CharactersAdapter
 import com.personal.rickpedia.util.popBackStack
 import dagger.hilt.android.AndroidEntryPoint
+import jp.wasabeef.blurry.Blurry
 import jp.wasabeef.glide.transformations.BlurTransformation
 import java.util.*
 
@@ -32,7 +37,6 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
         binding.ivBackIcon.setOnClickListener {
             popBackStack()
         }
-        changeVisibility(false)
     }
 
     override fun onInitObserver() {
@@ -50,14 +54,6 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
     override fun onLoading(loading: Boolean) {}
 
     // Region Local Method
-    private fun changeVisibility(loading: Boolean) {
-        binding.pbLoading.isVisible = !loading
-        binding.ivBackgroundImage.isVisible = loading
-        binding.mcvBack.isVisible = loading
-        binding.mcvDetailImage.isVisible = loading
-        binding.clDetailContainer.isVisible = loading
-    }
-
     private fun setDataInView(query: Character?) {
         binding.tvDetailName.text = query?.name
         binding.includeInfo.tvDetailSpeciesValue.text = query?.species
@@ -67,10 +63,6 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
 
         setImages(query)
         setStatus(query)
-
-        Handler().postDelayed({
-            changeVisibility(true)
-        }, 2000)
     }
 
     private fun setStatus(query: Character?) {
@@ -102,6 +94,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
 
     private fun setImages(query: Character?) {
         context?.let {
+
             Glide.with(it)
                 .load(query?.image)
                 .into(binding.civDetailImage)
@@ -109,7 +102,7 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
             // Background
             Glide.with(it)
                 .load(args.character?.image)
-                .apply(bitmapTransform(BlurTransformation(22)))
+                .apply(bitmapTransform(BlurTransformation(25)))
                 .into(binding.ivBackgroundImage)
         }
     }

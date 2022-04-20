@@ -5,17 +5,19 @@ import androidx.paging.PagingState
 import com.personal.rickpedia.data.remote.apiHelper.CharacterApiHelper
 import com.personal.rickpedia.domain.character.AllCharacterResult
 import com.personal.rickpedia.domain.character.Character
+import com.personal.rickpedia.util.OnLoading
 import kotlinx.coroutines.async
 import kotlinx.coroutines.coroutineScope
 import java.lang.Exception
 
 class CharacterPagingSource(
-    private val characterCharacterApiHelper: CharacterApiHelper
+    private val characterCharacterApiHelper: CharacterApiHelper,
+    private val OnLoading: OnLoading?
 ): PagingSource<Int, Character>() {
 
     companion object {
         private const val INITIAL_PAGE_INDEX = 1
-        private const val DEFAULT_PAGE_SIZE = 10
+        const val DEFAULT_PAGE_SIZE = 10
     }
 
     override fun getRefreshKey(state: PagingState<Int, Character>): Int {
@@ -25,6 +27,9 @@ class CharacterPagingSource(
     override suspend fun load(params: LoadParams<Int>): LoadResult<Int, Character> {
         try {
             val nextPageNumber = params.key ?: 1
+            if (nextPageNumber == 1){
+                OnLoading?.invoke(true)
+            }
             val allCharactersResponse = getAllCharacters(nextPageNumber, DEFAULT_PAGE_SIZE)
             val characters = allCharactersResponse?.results ?: emptyList()
 
@@ -32,6 +37,10 @@ class CharacterPagingSource(
                 null
             } else {
                 nextPageNumber + INITIAL_PAGE_INDEX
+            }
+
+            if (characters.isNotEmpty()) {
+                OnLoading?.invoke(false)
             }
 
             return LoadResult.Page(

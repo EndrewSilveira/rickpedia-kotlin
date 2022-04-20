@@ -20,4 +20,5 @@
     <color name="white_variant">#EFEFEF</color>
 
     <color name="transparent">#00EFEFEF</color>
+    <color name="shimmer_placeholder">#C2C2C2</color>
 </resources>

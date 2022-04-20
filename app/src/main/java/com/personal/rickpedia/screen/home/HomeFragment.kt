@@ -11,6 +11,7 @@ import com.personal.rickpedia.R
 import com.personal.rickpedia.base.BaseFragment
 import com.personal.rickpedia.databinding.FragmentHomeBinding
 import com.personal.rickpedia.domain.character.Character
+import com.personal.rickpedia.util.OnLoading
 import com.personal.rickpedia.util.TransitionAnimation
 import com.personal.rickpedia.util.navigate
 import dagger.hilt.android.AndroidEntryPoint
@@ -23,6 +24,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), NavigationView.OnNavig
         FragmentHomeBinding::inflate
 
     private val characterAdapter: CharactersAdapter by lazy { CharactersAdapter() }
+    private var onLoading: OnLoading? = null
 
     override fun onInitView() {
         setupDrawer()
@@ -40,10 +42,20 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), NavigationView.OnNavig
         characterAdapter.onItemClick = {
             onNavigateToDetail(it)
         }
+        onLoading = {
+            binding.includeShimmerHome.shimmerhome.isVisible = it
+            if (it){
+                binding.rvCharactersList.isVisible = false
+            } else {
+                binding.shimmerLayout.stopShimmer()
+                binding.rvCharactersList.isVisible = true
+                binding.rvCharactersList.scrollTo(0, 0)
+            }
+        }
     }
 
     override fun onInitObserver() {
-        viewModel.allCharacters.observe(this, { characters ->
+        viewModel.allCharacters.observe(this) { characters ->
             characterAdapter.submitData(lifecycle, characters)
 
             //TODO Search Feature with paging Data
@@ -61,18 +73,19 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), NavigationView.OnNavig
 //                    binding.tvNoResults.isVisible = filteredResults != null
 //                }
 //            }
-        })
+        }
     }
 
-    override fun onFetchInitialData() {}
+    override fun onFetchInitialData() {
+        viewModel.fetchList(onLoading)
+        binding.shimmerLayout.startShimmer()
+    }
 
     override fun onError(message: String) {
         //TODO create exception Handler on BaseViewModel
     }
 
-    override fun onLoading(loading: Boolean) {
-        binding.pbLoading.isVisible = loading
-    }
+    override fun onLoading(loading: Boolean) {}
     //endregion Base Fragment
 
     //region Navigation
