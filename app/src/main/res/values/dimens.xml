@@ -23,5 +23,8 @@
     <dimen name="text_size_extra_big">26sp</dimen>
 
     <dimen name="app_bar_height">56sp</dimen>
+
     <dimen name="default_icon_size">48dp</dimen>
+    <dimen name="big_icon_size">58dp</dimen>
+    <dimen name="super_icon_size">62dp</dimen>
 </resources>

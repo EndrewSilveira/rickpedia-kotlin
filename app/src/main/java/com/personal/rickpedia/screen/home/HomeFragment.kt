@@ -27,17 +27,9 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), NavigationView.OnNavig
     private var onLoading: OnLoading? = null
 
     override fun onInitView() {
-        setupDrawer()
 
-        binding.tvScreenTitle.text = getString(R.string.home_title)
+        binding.mtbHomeToolbar.title = getString(R.string.home_title)
         binding.rvCharactersList.adapter = characterAdapter
-        binding.ivMenuIcon.setOnClickListener {
-            binding.drawerLayout.openDrawer(binding.navView)
-        }
-        binding.ivSearchIcon.setOnClickListener {
-//            Toast.makeText(requireContext(), "Not available at the moment, Sorry.", Toast.LENGTH_SHORT).show()
-            binding.includeSearchBar.root.isVisible = !binding.includeSearchBar.root.isVisible
-        }
 
         characterAdapter.onItemClick = {
             onNavigateToDetail(it)
@@ -103,9 +95,5 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), NavigationView.OnNavig
     //endregion Navigation
 
     //region Local Method
-    private fun setupDrawer() {
-        binding.navView.setNavigationItemSelectedListener(this)
-        binding.drawerLayout.closeDrawer(binding.navView)
-    }
     //endregion LocalMethod
 }
