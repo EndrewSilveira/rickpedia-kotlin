@@ -4,7 +4,7 @@
 
     <Transition android:id="@+id/transitionCollapsedToExpanded"
         motion:autoTransition="none"
-        motion:duration="1000"
+        motion:duration="350"
         motion:constraintSetEnd="@+id/expanded"
         motion:constraintSetStart="@id/collapsed"
         motion:motionInterpolator="easeIn">

@@ -1,7 +1,9 @@
 package com.personal.rickpedia.screen.home
 
+import android.os.Handler
 import android.view.LayoutInflater
 import android.view.MenuItem
+import android.view.View
 import androidx.core.view.isVisible
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.viewModels
@@ -27,7 +29,6 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), NavigationView.OnNavig
     private var onLoading: OnLoading? = null
 
     override fun onInitView() {
-
         binding.mtbHomeToolbar.title = getString(R.string.home_title)
         binding.rvCharactersList.adapter = characterAdapter
 
@@ -80,6 +81,7 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), NavigationView.OnNavig
     override fun onLoading(loading: Boolean) {}
     //endregion Base Fragment
 
+    //region Local Method
     //region Navigation
     override fun onNavigationItemSelected(item: MenuItem): Boolean {
         when (item.itemId) {
@@ -93,7 +95,5 @@ class HomeFragment : BaseFragment<FragmentHomeBinding>(), NavigationView.OnNavig
         navigate(directions, TransitionAnimation.TRANSLATE_FROM_RIGHT)
     }
     //endregion Navigation
-
-    //region Local Method
     //endregion LocalMethod
 }
