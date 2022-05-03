@@ -212,6 +212,7 @@
             android:clipToPadding="true"
             android:paddingHorizontal="@dimen/margin_8"
             android:paddingTop="@dimen/margin_30"
+            android:requiresFadingEdge="vertical"
             app:layoutManager="androidx.recyclerview.widget.GridLayoutManager"
             app:layout_behavior="com.google.android.material.appbar.AppBarLayout$ScrollingViewBehavior"
             app:layout_constraintBottom_toBottomOf="parent"
