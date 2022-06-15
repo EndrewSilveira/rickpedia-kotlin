@@ -18,7 +18,6 @@ import com.personal.rickpedia.domain.character.Character
 import com.personal.rickpedia.screen.home.CharactersAdapter
 import com.personal.rickpedia.util.popBackStack
 import dagger.hilt.android.AndroidEntryPoint
-import jp.wasabeef.blurry.Blurry
 import jp.wasabeef.glide.transformations.BlurTransformation
 import java.util.*
 
@@ -33,7 +32,6 @@ class DetailFragment : BaseFragment<FragmentDetailBinding>() {
     private val args: DetailFragmentArgs by navArgs()
 
     override fun onInitView() {
-
         binding.ivBackIcon.setOnClickListener {
             popBackStack()
         }
